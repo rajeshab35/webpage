@@ -2,7 +2,7 @@
 Multi-faceted trust in recommendation
 
 # Github links
-<a href="https://github.com/varunnaganathan/MTrust">mTrust: Discerning Multi-Faceted Trust in a Connected World</a> 
+<a href="https://github.com/varunnaganathan/MTrust">mTrust: Discerning Multi-Faceted Trust in a Connected World</a> <br/>
 <a href="https://github.com/rajeshab35/Circle-based-Recommendation">Circle-based Recommendation in Online Social Network</a> 
 # Problem Statement
 Improving Recommendation system accuracy by using category-specific social trust circles from social network data combined with available rating data.
@@ -11,7 +11,6 @@ Improving Recommendation system accuracy by using category-specific social trust
 Epinions is a consumer opinion website where users can review items and  assign numeric ratings. The trust values between users are binary. It  consists  of  ratings  from  71,002 users who rated a total of 104,356 different items from 451 categories.   The  total  number  of  ratings  is  571,235.
 Dataset Url - http://alchemy.cs.washington.edu/data/epinions/
 
-Ciao. For each product rating entry, we were provided with date, product name,categories of a product and its ratings. Dataset Url - data
 # circle based recommendation
 5-fold crossvalidation is removed for clarity
 
