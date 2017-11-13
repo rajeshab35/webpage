@@ -7,12 +7,62 @@ Multi-faceted trust in recommendation
 # Problem Statement
 Improving Recommendation system accuracy by using category-specific social trust circles from social network data combined with available rating data.
 
+# Introduction
+## mTrust: Discerning Multi-Faceted Trust in a Connected World:
+Trust between users and entities has often been assumed to be singular.The paper however challenged this concept by bringing in the multifaceted trust relations indicating multiple and heterogeneous relationships between users.
+We aim to apply this concept to a product review system in order to reveal that trust between users is not homogenous but rather each user trusts other users in specific categories or “facets”.
+Experimental results on real-world data from Epinions and Ciao show that our work of discerning multi-faceted trust can be applied to improve the performance of tasks such as rating prediction, facet-sensitive ranking, and status theory.
+
+## Circle-based Recommendation in Online Social Network:
+Online social network information promises to increase recommendation  accuracy  beyond  the capabilities  of  purely rating/feedback-driven  recommender  systems.As one of their major benefits, social network based  approaches  have  been  shown  to  reduce  the  problems  with cold start users.
+ As to better serve users’ activities across different domains, many online social networks now support a new feature of “Friends Circles”,  which refines the domain-oblivious “Friends” concept.
+In real life , a  user  may  trust  different  subsets  of friends regarding different domains.  Unfortunately, in most existing multi-category rating datasets, a user’s social connections from all categories are mixed together.
+In this Project, we propose to implement circle-based recommendation system that  focus on inferring category-specific social trust circles from available rating  data  combined  with  social  network  data.We outline several variants of weighting friends within circles based on their inferred expertise levels.
+
 # Dataset
 Epinions is a consumer opinion website where users can review items and  assign numeric ratings. The trust values between users are binary. It  consists  of  ratings  from  71,002 users who rated a total of 104,356 different items from 451 categories.   The  total  number  of  ratings  is  571,235.
 Dataset Url - http://alchemy.cs.washington.edu/data/epinions/
 
-# circle based recommendation
-5-fold crossvalidation is removed for clarity
+# Approach  
+We first start with the basic matrix factorization model and then add one more factor that consider the social interaction information into the model for better personalization.
+## Trust Circle Inference :A user v is in the inferred circle of user u, i.e., in the set Cu(c),if and only if the following two conditions hold:
+S(u,v) > 0 in the (original) social network, and Nu(c) > 0 and Nv(c) > 0 in the rating data,
+where Nu(c) denotes  the  number  of  ratings  that  user u has assigned to items in category c. Otherwise, user v is not in the circle of u concerning category c.
+### Trust Value Assignment, Equal Trust
+Each user v in the inferred circle of user u gets assigned the same trust value.So S(c) matrix can be filled using following formula,
+### Expertise-based Trust 
+The goal is to assign a higher trust value or weight to the friends that are experts in the circle or category.As an approximation to their level of expertise, we use the numbers of ratings they assigned to items in the category.The idea is that an expert in a category may have rated more items in that category than users who are not experts in that category.
+### Trust Splitting
+Given that u trusts v,if v has more ratings in category c1 than in c2,it is more likely that u trusts v because of v’s ratings in c1 than v’s ratings in c2.Now if u and v simultaneously have ratings in multiple categories,the trust value of u towards v should be split across those commonly rated categories
+
+
+# Results
+RMSE comparison for MTrust for variable alpha values:
+
+| Alpha value | RMSE(our implementation) | RMSE (as per paper)                           |
+|-------------|--------------------------|-----------------------------------------------|
+| 0.01        | 3.812217197              | Not mentioned(but supposed to give max error) |
+| 0.3         | 1.1953                   | 0.98675                                       |
+| 0.8         | 1.259971543              | 1.0423                                        |
+
+Circle-based Recommendation in Online Social Networks,Below results shows RMSE error for first 1000 users, equal trust division gave the least RMSE error, while expert based trust gave better result than trust split.
+Note:- The difference between published result and ours is evident as it was run on 71,002 users. 1000 user restriction is because of our memory and computation limitations. 
+
+| category                 | equal trust | expert based | Trust split |
+|--------------------------|-------------|--------------|-------------|
+| Cars                     | 0.9816      | 1.084        | 1.163       |
+| Online_Stores_&_Services | 0.8973      | 0.8787       | 0.9206      |
+| Videos_&_DVDs            | 0.5951      | 0.5914       | 0.6201      |
+| Books                    | 0.7148      | 0.729        | 0.7703      |
+| Music                    | 0.6481      | 0.7297       | 0.7853      |
+| Video_Games              | 0.8505      | 0.7898       | 0.8877      |
+| toy                      | 0.7603      | 0.7726       | 0.8294      |
+| Destinations             | 0.7725      | 0.8404       | 0.9231      |
+| software                 | 0.9382      | 0.8978       | 0.9649      |
+| Avg RMSE error           | 0.79537778  | 0.8126       | 0.873822    |
+
+# Implementation detail
+circle based recommendation
 
 ## 1. loading data form files to panda data frame
 Products.csv -> Product_df (stores all product data)<br/>
