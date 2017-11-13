@@ -25,7 +25,8 @@ Dataset Url - http://alchemy.cs.washington.edu/data/epinions/
 
 # Approach  
 We first start with the basic matrix factorization model and then add one more factor that consider the social interaction information into the model for better personalization.
-## Trust Circle Inference :A user v is in the inferred circle of user u, i.e., in the set Cu(c),if and only if the following two conditions hold:
+## Trust Circle Inference 
+A user v is in the inferred circle of user u, i.e., in the set Cu(c),if and only if the following two conditions hold:
 S(u,v) > 0 in the (original) social network, and Nu(c) > 0 and Nv(c) > 0 in the rating data,
 where Nu(c) denotes  the  number  of  ratings  that  user u has assigned to items in category c. Otherwise, user v is not in the circle of u concerning category c.
 ### Trust Value Assignment, Equal Trust
